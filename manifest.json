@@ -1,0 +1,10 @@
+{
+    "name": "Ben's Tab Grabber",
+    "description": "Regularly record tabs to catch my thoughts as I read and search",
+    "version": "0.1.0",
+    "manifest_version": 3,
+    "permissions": [
+        "tabs"
+      ]
+  }
+  
