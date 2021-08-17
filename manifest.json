@@ -8,7 +8,8 @@
         "storage",
         "activeTab",
         "scripting",
-        "downloads"
+        "downloads",
+        "alarms"
     ],
     "options_page": "options.html",
     "background": {
