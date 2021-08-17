@@ -16,6 +16,7 @@ function filterTabs(tabs){
 }
 
 function getTabs() {
+    console.log("Getting tabs ...")
     chrome.tabs.query({}, function (newTabs) {
         let datetime = new Date()
         let formattedTabs = newTabs.map( (tab) => { return {url:tab.url, title:tab.title, time:datetime.getTime(), date:datetime.toUTCString()}; });
@@ -28,7 +29,9 @@ function getTabs() {
 
             let filteredTabs = filterTabs(unfilteredTabs);
 
-            chrome.storage.sync.set({"storedTabs": filteredTabs});
+            chrome.storage.sync.set({"storedTabs": filteredTabs}, () => {
+                console.log("Saved tabs ...");
+            });
         });
     });
 }
