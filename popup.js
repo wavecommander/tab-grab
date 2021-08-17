@@ -1,21 +1,13 @@
 let saveToFile = document.getElementById("saveToFile");
 
-// chrome.storage.sync.get("color", ({ color }) => {
-//   saveToFile.style.backgroundColor = color;
-// });
-
 saveToFile.addEventListener("click", async () => {
-    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      function: setPageBackgroundColor,
-    });
-});
+  chrome.storage.sync.get("storedTabs", (storedTabs) => {
+    _tabs = JSON.stringify(storedTabs)
 
-  function setPageBackgroundColor() {
-    chrome.storage.sync.get("color", ({ color }) => {
-      document.body.style.backgroundColor = color;
+    chrome.downloads.download({
+      url: window.URL.createObjectURL(new Blob([_tabs],
+      {type: "octet/stream"})),
+      filename: 'tabs.json', conflictAction: chrome.downloads.FilenameConflictAction.uniquify
     });
-}
-  
+  });
+});
