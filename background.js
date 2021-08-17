@@ -38,5 +38,5 @@ function filterTabs(tabs) {
     return Array.from(shortlist);
 }
 
-chrome.alarms.create("get-tabs", {delayInMinutes: 5, periodInMinutes: 5})
+chrome.alarms.create("get-tabs", {delayInMinutes: 0, periodInMinutes: 5})
 chrome.alarms.onAlarm.addListener(getTabs);
