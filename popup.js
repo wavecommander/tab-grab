@@ -1,10 +1,10 @@
-let changeColor = document.getElementById("changeColor");
+let saveToFile = document.getElementById("saveToFile");
 
-chrome.storage.sync.get("color", ({ color }) => {
-  changeColor.style.backgroundColor = color;
-});
+// chrome.storage.sync.get("color", ({ color }) => {
+//   saveToFile.style.backgroundColor = color;
+// });
 
-changeColor.addEventListener("click", async () => {
+saveToFile.addEventListener("click", async () => {
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   
     chrome.scripting.executeScript({
