@@ -1,7 +1,7 @@
 {
     "name": "Tab Grab",
     "description": "Regularly record tabs to catch my thoughts as I read and search",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "manifest_version": 3,
     "permissions": [
         "tabs",
@@ -9,7 +9,8 @@
         "activeTab",
         "scripting",
         "downloads",
-        "alarms"
+        "alarms",
+        "unlimitedStorage"
     ],
     "options_page": "options.html",
     "background": {

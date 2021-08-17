@@ -4,23 +4,27 @@ function getTabs() {
         let datetime = new Date()
         let formattedTabs = newTabs.map( (tab) => { return {url:tab.url, title:tab.title, time:datetime.getTime(), date:datetime.toUTCString()}; });
 
-        chrome.storage.sync.get("storedTabs" , (storedTabs) => {
+        chrome.storage.local.get("storedTabs", (storedTabs) => {
+            storedTabs = storedTabs.storedTabs // disgusting, why???
+
             let unfilteredTabs = formattedTabs;
             if(Array.isArray(storedTabs)) {
                 unfilteredTabs = formattedTabs.concat(storedTabs);
             }
+            console.log(unfilteredTabs)
 
             let filteredTabs = filterTabs(unfilteredTabs);
+            console.log(filteredTabs)
 
-            chrome.storage.sync.set({"storedTabs": filteredTabs}, () => {
+            chrome.storage.local.set({"storedTabs": filteredTabs}, () => {
                 console.log("Saved tabs ...");
             });
         });
     });
 }
 
-function filterTabs(tabs){
-    let shortlist = []
+function filterTabs(tabs) {
+    let shortlist = new Set()
 
     for (const tab1 of tabs) {
         let oldestTime = tab1.time
@@ -29,10 +33,10 @@ function filterTabs(tabs){
         for (const tab2 of tabs) {
             if(tab1.url == tab2.url && tab2.time < oldestTime) curTab = tab2;
         }
-        shortlist.push(curTab)
+        shortlist.add(curTab)
     }
-    return shortlist;
+    return Array.from(shortlist);
 }
 
-chrome.alarms.create("get-tabs", {delayInMinutes: 5})
+chrome.alarms.create("get-tabs", {delayInMinutes: 5, periodInMinutes: 5})
 chrome.alarms.onAlarm.addListener(getTabs);

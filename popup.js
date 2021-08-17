@@ -1,7 +1,7 @@
 let saveToFile = document.getElementById("saveToFile");
 
 saveToFile.addEventListener("click", async () => {
-  chrome.storage.sync.get("storedTabs", (storedTabs) => {
+  chrome.storage.local.get("storedTabs", (storedTabs) => {
     _tabs = JSON.stringify(storedTabs)
 
     chrome.downloads.download({
