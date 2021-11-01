@@ -4,8 +4,8 @@ function getTabs() {
         let datetime = new Date()
         let formattedTabs = newTabs.map( (tab) => { return {url:tab.url, title:tab.title, time:datetime.getTime(), date:datetime.toUTCString()}; });
 
-        chrome.storage.local.get("storedTabs", (storedTabs) => {
-            storedTabs = storedTabs.storedTabs // disgusting, why???
+        chrome.storage.local.get("storedTabs", (result) => {
+            let storedTabs = result.storedTabs
 
             let unfilteredTabs = formattedTabs;
             if(Array.isArray(storedTabs)) {
@@ -17,7 +17,7 @@ function getTabs() {
             console.log(filteredTabs)
 
             chrome.storage.local.set({"storedTabs": filteredTabs}, () => {
-                console.log("Saved tabs ...");
+                console.log("Saved tabs");
             });
         });
     });
